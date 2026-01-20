@@ -1,0 +1,89 @@
+/*!
+ * ---------------------------------------------------------------------
+ *
+ * GLPI - Gestionnaire Libre de Parc Informatique
+ *
+ * http://glpi-project.org
+ *
+ * @copyright 2015-2026 Teclib' and contributors.
+ * @copyright 2003-2014 by the INDEPNET Development Team.
+ * @licence   https://www.gnu.org/licenses/gpl-3.0.html
+ *
+ * ---------------------------------------------------------------------
+ *
+ * LICENSE
+ *
+ * This file is part of GLPI.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
+ *
+ * ---------------------------------------------------------------------
+ */
+
+// Tema personalizado DETRAN Ceará
+// Cores baseadas na identidade visual do DETRAN-CE
+// Amarelo: #FFE500 | Preto: #2D3436 | Verde Ceará: #006847
+
+:root[data-glpi-theme="detran_ceara"] {
+    // Cores da paleta para preview
+    --glpi-palette-color-1: #FFE500; // Amarelo DETRAN
+    --glpi-palette-color-2: #2D3436; // Preto/Cinza escuro
+    --glpi-palette-color-3: #006847; // Verde Ceará
+    --glpi-palette-color-4: #FFE500; // Amarelo destaque
+
+    // Cores primárias do sistema
+    --tblr-primary-rgb: 255, 229, 0;
+    --tblr-primary: #FFE500;
+    --tblr-primary-fg: #2D3436;
+    --tblr-link-color-rgb: 0, 104, 71;
+    --tblr-link-color: #006847;
+
+    // Menu principal - Amarelo DETRAN com texto preto
+    --glpi-mainmenu-bg: #FFE500;
+    --glpi-mainmenu-fg: #2D3436;
+    --glpi-mainmenu-fg-muted: rgba(45, 52, 54, 0.7);
+    --glpi-mainmenu-active-bg: #E6CE00;
+
+    // Logos customizados do DETRAN Ceará
+    --glpi-logo: url("../pics/logos/logo-detran-ceara-100.svg");
+    --glpi-logo-reduced: url("../pics/logos/logo-detran-ceara-icon.svg");
+    --glpi-logo-light: url("../pics/logos/logo-detran-ceara-100.svg");
+    --glpi-logo-light-reduced: url("../pics/logos/logo-detran-ceara-icon.svg");
+    --glpi-logo-dark: url("../pics/logos/logo-detran-ceara-100.svg");
+    --glpi-logo-dark-reduced: url("../pics/logos/logo-detran-ceara-icon.svg");
+    --glpi-logo-dark-login: url("../pics/logos/logo-detran-ceara-250.svg");
+    --glpi-logo-light-login: url("../pics/logos/logo-detran-ceara-250.svg");
+
+    // Cabeçalhos de formulário - Verde Ceará
+    --glpi-form-header-fg: #006847;
+    --glpi-form-header-bg: rgba(0, 104, 71, 0.1);
+    --glpi-form-header-border-color: rgba(0, 104, 71, 0.25);
+
+    // Badges
+    --glpi-badge-bg: rgba(0, 104, 71, 0.1);
+    --glpi-badge-fg: #006847;
+
+    // Helpdesk
+    --glpi-helpdesk-header: #FFF9CC;
+    --glpi-helpdesk-tiles-section-bg: #FFFDE6;
+    --glpi-helpdesk-tabs-section-bg: #fff;
+
+    // Ilustrações
+    --glpi-illustrations-header-dark: #2D3436;
+    --glpi-illustrations-header-light: #FFF9CC;
+    --glpi-illustrations-primary: #FFE500;
+    --glpi-illustrations-gradient-1: #FFFDE6;
+    --glpi-illustrations-gradient-2: #FFF9CC;
+    --glpi-illustrations-gradient-3: #FFE500;
+}

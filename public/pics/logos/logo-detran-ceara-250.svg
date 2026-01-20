@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 138" width="250" height="138">
+  <!-- Logo DETRAN Ceará - Versão Login (250x138) -->
+
+  <!-- Círculo amarelo grande -->
+  <circle cx="125" cy="58" r="52" fill="#FFE500"/>
+  <circle cx="125" cy="58" r="48" fill="#FFE500" stroke="#2D3436" stroke-width="3"/>
+
+  <!-- Símbolo do trânsito estilizado (3 setas em círculo) -->
+  <g fill="#2D3436" transform="translate(125, 58)">
+    <!-- Seta 1 - topo -->
+    <path d="M0,-35 L12,-15 L5,-15 L5,5 L-5,5 L-5,-15 L-12,-15 Z" transform="rotate(0)"/>
+    <!-- Seta 2 - direita baixo -->
+    <path d="M0,-35 L12,-15 L5,-15 L5,5 L-5,5 L-5,-15 L-12,-15 Z" transform="rotate(120)"/>
+    <!-- Seta 3 - esquerda baixo -->
+    <path d="M0,-35 L12,-15 L5,-15 L5,5 L-5,5 L-5,-15 L-12,-15 Z" transform="rotate(240)"/>
+  </g>
+
+  <!-- Texto DETRAN -->
+  <text x="125" y="125" font-family="Arial Black, Arial, sans-serif" font-size="22" font-weight="bold" fill="#2D3436" text-anchor="middle">DETRAN</text>
+
+  <!-- Texto CEARÁ -->
+  <text x="125" y="137" font-family="Arial, sans-serif" font-size="10" fill="#2D3436" text-anchor="middle" letter-spacing="3">CEARÁ</text>
+</svg>
