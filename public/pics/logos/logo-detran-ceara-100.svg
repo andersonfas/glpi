@@ -1,19 +1,29 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 55" width="100" height="55">
   <!-- Logo DETRAN Ceará - Versão Menu (100x55) -->
-  <!-- Círculo amarelo com símbolo -->
-  <circle cx="27" cy="27.5" r="24" fill="#FFE500"/>
-  <circle cx="27" cy="27.5" r="22" fill="#FFE500" stroke="#2D3436" stroke-width="2"/>
 
-  <!-- Símbolo do trânsito estilizado (3 setas em círculo) -->
-  <g fill="#2D3436" transform="translate(27, 27.5)">
-    <!-- Seta 1 - topo -->
-    <path d="M0,-16 L6,-6 L2,-6 L2,2 L-2,2 L-2,-6 L-6,-6 Z" transform="rotate(0)"/>
-    <!-- Seta 2 - direita baixo -->
-    <path d="M0,-16 L6,-6 L2,-6 L2,2 L-2,2 L-2,-6 L-6,-6 Z" transform="rotate(120)"/>
-    <!-- Seta 3 - esquerda baixo -->
-    <path d="M0,-16 L6,-6 L2,-6 L2,2 L-2,2 L-2,-6 L-6,-6 Z" transform="rotate(240)"/>
+  <!-- Círculo amarelo com borda preta -->
+  <circle cx="27" cy="27" r="24" fill="#FFFF00" stroke="#000000" stroke-width="3"/>
+
+  <!-- Círculo central preto -->
+  <circle cx="27" cy="27" r="5" fill="#000000"/>
+
+  <!-- Símbolo de reciclagem simplificado -->
+  <g fill="#000000" transform="translate(27, 27)">
+    <g transform="rotate(0)">
+      <path d="M0,-18 L-5,-10 L-2,-10 L-2,-4 L2,-4 L2,-10 L5,-10 Z"/>
+      <path d="M2,-4 Q10,2 10,10 L14,6 L10,16 L6,8 L9,10 Q8,4 2,-2"/>
+    </g>
+    <g transform="rotate(120)">
+      <path d="M0,-18 L-5,-10 L-2,-10 L-2,-4 L2,-4 L2,-10 L5,-10 Z"/>
+      <path d="M2,-4 Q10,2 10,10 L14,6 L10,16 L6,8 L9,10 Q8,4 2,-2"/>
+    </g>
+    <g transform="rotate(240)">
+      <path d="M0,-18 L-5,-10 L-2,-10 L-2,-4 L2,-4 L2,-10 L5,-10 Z"/>
+      <path d="M2,-4 Q10,2 10,10 L14,6 L10,16 L6,8 L9,10 Q8,4 2,-2"/>
+    </g>
   </g>
 
-  <!-- Texto DETRAN-CE embaixo do círculo (pequeno) -->
-  <text x="27" y="53" font-family="Arial Black, Arial, sans-serif" font-size="6" font-weight="bold" fill="#2D3436" text-anchor="middle">DETRAN-CE</text>
+  <!-- Texto DETRAN-CE ao lado -->
+  <text x="60" y="22" font-family="Arial Black, sans-serif" font-size="9" font-weight="900" fill="#000000">DETRAN</text>
+  <text x="60" y="35" font-family="Arial, sans-serif" font-size="8" fill="#000000">CEARÁ</text>
 </svg>
