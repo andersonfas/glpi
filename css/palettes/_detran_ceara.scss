@@ -87,3 +87,22 @@
     --glpi-illustrations-gradient-2: #FFF9CC;
     --glpi-illustrations-gradient-3: #FFE500;
 }
+
+// Ajustes de tamanho dos logos para o tema DETRAN Ceará
+:root[data-glpi-theme="detran_ceara"] {
+    .page .glpi-logo {
+        background-size: contain !important;
+        background-position: center !important;
+    }
+
+    .page-anonymous .glpi-logo {
+        background-size: contain !important;
+        background-position: center !important;
+        object-fit: contain !important;
+    }
+
+    .navbar-brand .glpi-logo {
+        background-size: contain !important;
+        background-position: center !important;
+    }
+}
