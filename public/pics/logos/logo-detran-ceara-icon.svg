@@ -1,24 +1,27 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
-  <!-- Logo DETRAN Ceará - Ícone -->
+  <!-- Logo DETRAN Ceará - Ícone Oficial -->
 
   <!-- Círculo amarelo com borda preta -->
-  <circle cx="50" cy="50" r="42" fill="#FFFF00" stroke="#000000" stroke-width="5"/>
+  <circle cx="50" cy="50" r="44" fill="#FFFF00" stroke="#000000" stroke-width="5"/>
 
   <!-- Círculo central preto -->
-  <circle cx="50" cy="50" r="7" fill="#000000"/>
+  <circle cx="50" cy="50" r="9" fill="#000000"/>
 
-  <!-- Símbolo Möbius - 3 setas curvas -->
+  <!-- Símbolo Möbius - 3 setas curvas entrelaçadas -->
   <g fill="#000000">
-    <!-- Seta 1 - Superior -->
-    <path d="M50,15 L43,27 L47,27 C47,35 48,40 50,43 C52,40 53,35 53,27 L57,27 Z"/>
-    <path d="M53,40 C60,45 67,52 72,62 L67,62 L78,80 L89,62 L82,62 C76,50 66,42 55,37 Z"/>
+    <!-- Seta Superior - ponta para cima -->
+    <path d="M50,12 L42,26 L46,26 L46,32 Q46,42 50,48 Q54,42 54,32 L54,26 L58,26 Z"/>
+    <!-- Curva direita da seta superior -->
+    <path d="M54,45 Q68,52 76,68 L70,68 Q78,82 86,68 L80,68 Q72,52 58,42"/>
 
-    <!-- Seta 2 - Inferior Direita -->
-    <path d="M78,72 L85,60 L81,62 C76,52 68,46 58,43 L56,48 C64,51 70,57 74,65 L70,67 Z"/>
-    <path d="M72,78 C64,84 54,86 44,84 C36,82 30,78 24,72 L30,72 C35,76 42,79 50,79 C58,79 65,76 70,72 Z"/>
+    <!-- Seta Inferior Direita - ponta para baixo-direita -->
+    <path d="M80,72 L86,60 L82,64 Q72,48 56,44 L54,50 Q66,54 74,66 L70,68 Z"/>
+    <!-- Curva inferior -->
+    <path d="M76,78 Q62,90 44,88 Q28,86 18,74 L26,74 Q34,82 50,82 Q64,82 72,74"/>
 
-    <!-- Seta 3 - Inferior Esquerda -->
-    <path d="M22,72 L15,60 L19,62 C24,52 32,46 42,43 L44,48 C36,51 30,57 26,65 L30,67 Z"/>
-    <path d="M47,40 C40,45 33,52 28,62 L33,62 L22,80 L11,62 L18,62 C24,50 34,42 45,37 Z"/>
+    <!-- Seta Inferior Esquerda - ponta para baixo-esquerda -->
+    <path d="M20,72 L14,60 L18,64 Q28,48 44,44 L46,50 Q34,54 26,66 L30,68 Z"/>
+    <!-- Curva esquerda -->
+    <path d="M46,45 Q32,52 24,68 L30,68 Q22,82 14,68 L20,68 Q28,52 42,42"/>
   </g>
 </svg>
