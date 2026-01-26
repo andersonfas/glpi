@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  glpi-db:
+    image: mariadb:${MARIADB_TAG:-11.4}
+    container_name: glpi-db
+    restart: unless-stopped
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW --max_allowed_packet=64M
+    volumes:
+      - glpi_database:/var/lib/mysql
+    environment:
+      - MARIADB_ROOT_PASSWORD=${DB_ROOT_PASS}
+      - MARIADB_DATABASE=${DB_NAME}
+      - MARIADB_USER=${DB_USER}
+      - MARIADB_PASSWORD=${DB_PASS}
+    networks:
+      - glpi_net
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  glpi-app:
+    image: glpi/glpi:${GLPI_TAG:-latest}
+    container_name: glpi-app
+    restart: unless-stopped
+    ports:
+      - "${GLPI_PORT:-8095}:80"
+    volumes:
+      # Dados persistentes do GLPI
+      - glpi_config:/etc/glpi
+      - glpi_files:/var/lib/glpi/files
+      - glpi_marketplace:/var/lib/glpi/marketplace
+      # Timezone
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+      # === TEMA DETRAN CEARÁ ===
+      - ./theme/css/core_palettes.scss:/var/www/html/glpi/css/core_palettes.scss:ro
+      - ./theme/css/palettes/_detran_ceara.scss:/var/www/html/glpi/css/palettes/_detran_ceara.scss:ro
+      - ./theme/pics/logos/logomarca_detran_01.png:/var/www/html/glpi/public/pics/logos/logomarca_detran_01.png:ro
+      - ./theme/pics/logos/logomarca_detran_02.png:/var/www/html/glpi/public/pics/logos/logomarca_detran_02.png:ro
+    environment:
+      - TIMEZONE=${TIMEZONE:-America/Fortaleza}
+      - GLPI_INSTALL_MODE=NO
+      - GLPI_DB_HOST=${DB_HOST:-glpi-db}
+      - GLPI_DB_NAME=${DB_NAME}
+      - GLPI_DB_USER=${DB_USER}
+      - GLPI_DB_PASSWORD=${DB_PASS}
+    depends_on:
+      glpi-db:
+        condition: service_healthy
+    networks:
+      - glpi_net
+
+networks:
+  glpi_net:
+    driver: bridge
+
+volumes:
+  glpi_database:
+    name: glpi_database
+  glpi_config:
+    name: glpi_config
+  glpi_files:
+    name: glpi_files
+  glpi_marketplace:
+    name: glpi_marketplace
