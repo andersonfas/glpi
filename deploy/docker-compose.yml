@@ -1,13 +1,22 @@
 version: '3.8'
 
+# ============================================================
+# GLPI + Tema DETRAN Ceará
+# ============================================================
+# Todos os dados ficam em /opt/docker/volumes/glpi/
+# Seguro contra: docker system prune -af
+# Para perder dados: deletar manualmente /opt/docker/volumes/glpi/
+# ============================================================
+
 services:
   glpi-db:
-    image: mariadb:${MARIADB_TAG:-11.4}
+    image: mariadb:${MARIADB_TAG:-10.11}
     container_name: glpi-db
     restart: unless-stopped
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW --max_allowed_packet=64M
     volumes:
-      - glpi_database:/var/lib/mysql
+      # Banco de dados persistente
+      - /opt/docker/volumes/glpi/database:/var/lib/mysql
     environment:
       - MARIADB_ROOT_PASSWORD=${DB_ROOT_PASS}
       - MARIADB_DATABASE=${DB_NAME}
@@ -28,21 +37,23 @@ services:
     ports:
       - "${GLPI_PORT:-8095}:80"
     volumes:
-      # Dados persistentes do GLPI
-      - glpi_config:/etc/glpi
-      - glpi_files:/var/lib/glpi/files
-      - glpi_marketplace:/var/lib/glpi/marketplace
+      # === DADOS PERSISTENTES DO GLPI ===
+      - /opt/docker/volumes/glpi/config:/etc/glpi
+      - /opt/docker/volumes/glpi/files:/var/lib/glpi/files
+      - /opt/docker/volumes/glpi/marketplace:/var/lib/glpi/marketplace
+
+      # === TEMA DETRAN CEARÁ (persistente) ===
+      - /opt/docker/volumes/glpi/theme/css/core_palettes.scss:/var/www/html/glpi/css/core_palettes.scss:ro
+      - /opt/docker/volumes/glpi/theme/css/palettes/_detran_ceara.scss:/var/www/html/glpi/css/palettes/_detran_ceara.scss:ro
+      - /opt/docker/volumes/glpi/theme/pics/logos/logomarca_detran_01.png:/var/www/html/glpi/public/pics/logos/logomarca_detran_01.png:ro
+      - /opt/docker/volumes/glpi/theme/pics/logos/logomarca_detran_02.png:/var/www/html/glpi/public/pics/logos/logomarca_detran_02.png:ro
+
       # Timezone
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
-      # === TEMA DETRAN CEARÁ ===
-      - ./theme/css/core_palettes.scss:/var/www/html/glpi/css/core_palettes.scss:ro
-      - ./theme/css/palettes/_detran_ceara.scss:/var/www/html/glpi/css/palettes/_detran_ceara.scss:ro
-      - ./theme/pics/logos/logomarca_detran_01.png:/var/www/html/glpi/public/pics/logos/logomarca_detran_01.png:ro
-      - ./theme/pics/logos/logomarca_detran_02.png:/var/www/html/glpi/public/pics/logos/logomarca_detran_02.png:ro
     environment:
       - TIMEZONE=${TIMEZONE:-America/Fortaleza}
-      - GLPI_INSTALL_MODE=NO
+      - GLPI_INSTALL_MODE=${GLPI_INSTALL_MODE:-NO}
       - GLPI_DB_HOST=${DB_HOST:-glpi-db}
       - GLPI_DB_NAME=${DB_NAME}
       - GLPI_DB_USER=${DB_USER}
@@ -56,13 +67,3 @@ services:
 networks:
   glpi_net:
     driver: bridge
-
-volumes:
-  glpi_database:
-    name: glpi_database
-  glpi_config:
-    name: glpi_config
-  glpi_files:
-    name: glpi_files
-  glpi_marketplace:
-    name: glpi_marketplace

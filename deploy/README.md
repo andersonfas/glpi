@@ -2,131 +2,127 @@
 
 Deploy do GLPI com tema personalizado do DETRAN Ceará.
 
-## Estrutura
+## Arquitetura de Persistência
 
 ```
-deploy/
-├── docker-compose.yml      # Configuração dos containers
-├── .env.example            # Variáveis de ambiente (exemplo)
-├── README.md               # Este arquivo
-└── theme/                  # Tema DETRAN Ceará
+/opt/docker/volumes/glpi/
+├── database/          ← Banco de dados MariaDB
+├── config/            ← Configurações do GLPI
+├── files/             ← Arquivos/uploads
+├── marketplace/       ← Plugins instalados
+└── theme/             ← Tema DETRAN Ceará
     ├── css/
     │   ├── core_palettes.scss
     │   └── palettes/
     │       └── _detran_ceara.scss
-    └── pics/
-        └── logos/
-            ├── logomarca_detran_01.png  # Logo login (2560x1440)
-            └── logomarca_detran_02.png  # Logo menu (1280x1379)
+    └── pics/logos/
+        ├── logomarca_detran_01.png
+        └── logomarca_detran_02.png
+```
+
+## Segurança dos Dados
+
+| Ação | Dados | Status |
+|------|-------|--------|
+| `docker system prune -af` | `/opt/docker/volumes/glpi/` | ✅ **SEGURO** |
+| `docker-compose down` | `/opt/docker/volumes/glpi/` | ✅ **SEGURO** |
+| Redeploy no Dokploy | `/opt/docker/volumes/glpi/` | ✅ **SEGURO** |
+| Atualizar versão GLPI | `/opt/docker/volumes/glpi/` | ✅ **SEGURO** |
+| `rm -rf /opt/docker/volumes/glpi/` | Dados | ❌ **PERDIDOS** |
+
+## Setup Inicial (EXECUTAR APENAS UMA VEZ)
+
+No servidor de deploy, execute:
+
+```bash
+# Opção 1: Via curl (recomendado)
+curl -sSL https://raw.githubusercontent.com/andersonfas/glpi/claude/glpi-detran-ceara-branding-qCddm/deploy/setup.sh | bash
+
+# Opção 2: Manualmente
+mkdir -p /opt/docker/volumes/glpi/{database,config,files,marketplace}
+mkdir -p /opt/docker/volumes/glpi/theme/css/palettes
+mkdir -p /opt/docker/volumes/glpi/theme/pics/logos
+
+# Baixar tema
+curl -sSL -o /opt/docker/volumes/glpi/theme/css/core_palettes.scss \
+  "https://raw.githubusercontent.com/andersonfas/glpi/claude/glpi-detran-ceara-branding-qCddm/deploy/theme/css/core_palettes.scss"
+
+curl -sSL -o /opt/docker/volumes/glpi/theme/css/palettes/_detran_ceara.scss \
+  "https://raw.githubusercontent.com/andersonfas/glpi/claude/glpi-detran-ceara-branding-qCddm/deploy/theme/css/palettes/_detran_ceara.scss"
+
+# Baixar logos
+curl -sSL -o /opt/docker/volumes/glpi/theme/pics/logos/logomarca_detran_01.png \
+  "https://raw.githubusercontent.com/andersonfas/glpi/11.0/bugfixes/public/pics/logos/logomarca_detran_01.png"
+
+curl -sSL -o /opt/docker/volumes/glpi/theme/pics/logos/logomarca_detran_02.png \
+  "https://raw.githubusercontent.com/andersonfas/glpi/11.0/bugfixes/public/pics/logos/logomarca_detran_02.png"
 ```
 
 ## Deploy via Dokploy
 
-### 1. Criar aplicação no Dokploy
+### 1. Configurar no Dokploy
 
-1. Acesse o painel do Dokploy
-2. Clique em **"Create Project"** (ou use um existente)
-3. Clique em **"Add Service"** → **"Docker Compose"**
-4. Configure:
-   - **Name**: `glpi-detran`
-   - **Source**: GitHub
-   - **Repository**: `andersonfas/glpi`
-   - **Branch**: `claude/glpi-detran-ceara-branding-qCddm` (ou o branch de produção)
-   - **Compose Path**: `deploy/docker-compose.yml`
+| Campo | Valor |
+|-------|-------|
+| Provider | GitLab |
+| Repository | glpi |
+| Branch | `claude/glpi-detran-ceara-branding-qCddm` |
+| Compose Path | `deploy/docker-compose.yml` |
 
-### 2. Configurar variáveis de ambiente
-
-No Dokploy, vá em **Environment** e adicione:
+### 2. Variáveis de Ambiente
 
 ```env
-MARIADB_TAG=11.4
+# Versões
+MARIADB_TAG=10.11
 GLPI_TAG=latest
 GLPI_PORT=8095
-TIMEZONE=America/Fortaleza
+
+# Banco de dados
 DB_HOST=glpi-db
-DB_NAME=glpi
-DB_USER=glpi
-DB_PASS=SuaSenhaSegura123!
-DB_ROOT_PASS=SenhaRootSegura456!
+DB_NAME=glpidb
+DB_USER=glpi_user
+DB_PASS=SuaSenhaSegura!
+DB_ROOT_PASS=SuaSenhaRootSegura!
+
+# Geral
+TIMEZONE=America/Fortaleza
+GLPI_INSTALL_MODE=NO
 ```
 
-⚠️ **IMPORTANTE**: Use senhas fortes e diferentes do exemplo!
+### 3. Deploy
 
-### 3. Configurar domínio (opcional)
+Clique em **Deploy** no Dokploy.
 
-No Dokploy, vá em **Domains** e configure:
-- **Domain**: `glpi.seudominio.com.br`
-- **HTTPS**: Ativado (Let's Encrypt)
+## Ativar Tema DETRAN Ceará
 
-### 4. Deploy
+1. Acesse o GLPI
+2. Vá em **Preferências** (canto superior direito)
+3. Na aba **Personalização**
+4. Em **Paleta de cores**, selecione **"detran_ceara"**
+5. Salve
 
-Clique em **"Deploy"** e aguarde os containers subirem.
+## Backup
 
-## Ativar o Tema DETRAN Ceará
+```bash
+# Backup completo
+tar -czvf backup_glpi_$(date +%Y%m%d).tar.gz /opt/docker/volumes/glpi/
 
-1. Acesse o GLPI: `http://seu-servidor:8095`
-2. Faça login com usuário administrador
-3. Vá em **Preferências** (canto superior direito)
-4. Em **Personalização**, selecione: **"detran_ceara"**
-5. Clique em **Salvar**
+# Restaurar
+tar -xzvf backup_glpi_YYYYMMDD.tar.gz -C /
+```
+
+## Atualização de Versão
+
+Para atualizar o GLPI:
+
+1. Altere `GLPI_TAG` no Dokploy (ex: `10.0.16` para `10.0.17`)
+2. Clique em **Redeploy**
+3. Os dados são mantidos automaticamente
 
 ## Cores do Tema
 
 | Elemento | Cor | Hex |
 |----------|-----|-----|
-| Menu principal | Amarelo | `#FFE500` |
+| Menu principal | Amarelo DETRAN | `#FFE500` |
 | Texto do menu | Preto | `#2D3436` |
 | Links/destaques | Verde Ceará | `#006847` |
-
-## Backup
-
-Os dados são persistidos em volumes Docker:
-
-| Volume | Conteúdo |
-|--------|----------|
-| `glpi_database` | Banco de dados MariaDB |
-| `glpi_config` | Configurações do GLPI |
-| `glpi_files` | Arquivos/uploads |
-| `glpi_marketplace` | Plugins instalados |
-
-### Fazer backup manual
-
-```bash
-# Backup do banco
-docker exec glpi-db mysqldump -u root -p glpi > backup_glpi_$(date +%Y%m%d).sql
-
-# Backup dos volumes
-docker run --rm -v glpi_files:/data -v $(pwd):/backup alpine tar czf /backup/glpi_files_$(date +%Y%m%d).tar.gz /data
-```
-
-## Atualização
-
-Para atualizar o GLPI ou o tema:
-
-1. No Dokploy, vá em **Deployments**
-2. Clique em **"Redeploy"**
-
-Os dados serão mantidos pois estão em volumes persistentes.
-
-## Troubleshooting
-
-### Tema não aparece
-
-```bash
-# Verificar se os arquivos estão montados
-docker exec glpi-app ls -la /var/www/html/glpi/css/palettes/_detran_ceara.scss
-docker exec glpi-app cat /var/www/html/glpi/css/core_palettes.scss | grep detran
-```
-
-### Limpar cache do GLPI
-
-```bash
-docker exec glpi-app rm -rf /var/www/html/glpi/files/_cache/*
-```
-
-### Logs
-
-```bash
-docker logs glpi-app
-docker logs glpi-db
-```
